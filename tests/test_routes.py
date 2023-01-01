@@ -221,7 +221,7 @@ class TestAccountService(TestCase):
 
     def test_security_header(self):
         """It should return a security header"""
-        response = self.client.get("/",environ_overrides=HTTPS_ENVIRON)
+        response = self.client.get("/", environ_overrides=HTTPS_ENVIRON)
 
         headers = {
                 'X-Frame-Options': 'SAMEORIGIN',
@@ -230,6 +230,16 @@ class TestAccountService(TestCase):
                 'Content-Security-Policy': 'default-src \'self\'; object-src \'none\'',
                 'Referrer-Policy': 'strict-origin-when-cross-origin'
             }
-        
+
         for key, value in headers.items():
             self.assertEqual(response.headers.get(key), value)
+
+    def test_cors_secuirty(self):
+        """It should return a CORS header"""
+        response = self.client.get("/", environ_overrides=HTTPS_ENVIRON)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+        # there should be additional Access-Control-Allow-Origin key
+        self.assertEqual(response.headers.get("Access-Control-Allow-Origin"), "*")
+
+        
