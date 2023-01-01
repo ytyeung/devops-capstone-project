@@ -144,13 +144,13 @@ class TestAccountService(TestCase):
         account = account_list[0]
 
         # get the data from response.get_json()
-        response = self.client.get(f"{BASE_URL}/{account.id}",content_type="application/json")
+        response = self.client.get(f"{BASE_URL}/{account.id}", content_type="application/json")
 
         # assert that the response.status_code is status.HTTP_200_OK
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         data = response.get_json()
-        
+
         # assert that data["name"] equals the account.name
         self.assertEqual(data["name"], account.name)
 
@@ -162,7 +162,7 @@ class TestAccountService(TestCase):
 
         # update the account
         # get the target id first
-        response = self.client.get(f"{BASE_URL}/{account.id}",content_type="application/json")
+        response = self.client.get(f"{BASE_URL}/{account.id}", content_type="application/json")
         data = response.get_json()
         # assert if the user
         self.assertEqual(data["name"], account.name)
@@ -176,7 +176,7 @@ class TestAccountService(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # get the data from response.get_json()
-        new_response = self.client.get(f"{BASE_URL}/{account.id}",content_type="application/json")
+        new_response = self.client.get(f"{BASE_URL}/{account.id}", content_type="application/json")
         new_data = new_response.get_json()
         self.assertEqual(new_data["name"], target_name)
 
@@ -186,7 +186,7 @@ class TestAccountService(TestCase):
         account = account_list[0]
 
         # send a self.client.delete() request to the BASE_URL with an id of an account
-        response = self.client.delete(f"{BASE_URL}/{account.id}",content_type="application/json")
+        response = self.client.delete(f"{BASE_URL}/{account.id}", content_type="application/json")
         # assert that the resp.status_code is status.HTTP_204_NO_CONTENT
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
@@ -194,8 +194,8 @@ class TestAccountService(TestCase):
         """It should not Read an Account that is not found"""
         invalid_id = 0
         # send a self.client.get() request to the BASE_URL with an invalid account number (e.g., 0)
-        response = self.client.get(f"{BASE_URL}/{invalid_id}",content_type="application/json")
-        
+        response = self.client.get(f"{BASE_URL}/{invalid_id}", content_type="application/json")
+
         # assert that the resp.status_code is status.HTTP_404_NOT_FOUND
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
@@ -203,8 +203,8 @@ class TestAccountService(TestCase):
         """It should not update an Account that is not found"""
         invalid_id = 0
         # send a self.client.get() request to the BASE_URL with an invalid account number (e.g., 0)
-        response = self.client.put(f"{BASE_URL}/{invalid_id}",content_type="application/json")
-        
+        response = self.client.put(f"{BASE_URL}/{invalid_id}", content_type="application/json")
+
         # assert that the resp.status_code is status.HTTP_404_NOT_FOUND
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
