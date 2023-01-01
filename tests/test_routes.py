@@ -180,6 +180,16 @@ class TestAccountService(TestCase):
         new_data = new_response.get_json()
         self.assertEqual(new_data["name"], target_name)
 
+    def test_delete_account(self):
+        """It should Delete an Account"""
+        account_list = self._create_accounts(1)
+        account = account_list[0]
+
+        # send a self.client.delete() request to the BASE_URL with an id of an account
+        response = self.client.delete(f"{BASE_URL}/{account.id}",content_type="application/json")
+        # assert that the resp.status_code is status.HTTP_204_NO_CONTENT
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
     def test_read_account_not_found(self):
         """It should not Read an Account that is not found"""
         invalid_id = 0
