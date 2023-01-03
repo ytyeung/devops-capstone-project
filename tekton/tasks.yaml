@@ -74,7 +74,7 @@ spec:
       image: python:3.9-slim
       workingDir: $(workspaces.source.path)
       env:
-        - name: database_uri
+        - name: DATABASE_URI
           value: $(params.database_uri)
       script: |
         #!/bin/bash
